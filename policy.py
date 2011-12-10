@@ -9,7 +9,7 @@ def can_haz(match_list, target_dict, credentials_dict):
 
   or
 
-    ('role:compute_admin',
+    (('role:compute_admin',),
      ('tenant_id:%(tenant_id)s', 'role:compute_sysadmin'))
 
 
@@ -88,6 +88,12 @@ import urllib2
 
 
 class HttpBrain(object):
+  """A brain that can check external urls as matches.
+
+  Posts json blobs for target and credentials.
+
+  """
+
   def _check_http(self, match, target_dict, cred_dict):
     url = match % target_dict
     data = {'target': json.dumps(target_dict),
