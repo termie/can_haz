@@ -1,4 +1,4 @@
-
+import json
 
 def can_haz(match_list, target_dict, credentials_dict):
   """Check the authz of some rules against credentials.
@@ -79,3 +79,6 @@ class Brain(object):
     return False
 
 
+def load_json(path):
+  rules_dict = json.load(open(path))
+  b = Brain(rules=rules_dict)
