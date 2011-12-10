@@ -98,6 +98,7 @@ class HttpBrain(object):
       return True
     return False
 
+
 def load_json(path):
   rules_dict = json.load(open(path))
   b = Brain(rules=rules_dict)
