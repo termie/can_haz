@@ -83,6 +83,21 @@ class Brain(object):
     return False
 
 
+import urllib
+import urllib2
+
+
+class HttpBrain(object):
+  def _check_http(self, match, target_dict, cred_dict):
+    url = match % target_dict
+    data = {'target': json.dumps(target_dict),
+            'credentials': json.dumps(cred_dict)}
+    post_data = urllib.urlencode(data)
+    f = urllib2.urlopen(url, post_data)
+    if f.read():
+      return True
+    return False
+
 def load_json(path):
   rules_dict = json.load(open(path))
   b = Brain(rules=rules_dict)
