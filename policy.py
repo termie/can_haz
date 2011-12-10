@@ -40,10 +40,10 @@ class Brain(object):
     for and_list in match_list:
       matched = False
       for match in and_list:
-        # check each rule and if any fail return false
-        if match.startswith('rule:'):
-          new_match_list = self.rules.get(match[5:])
-          rv = self.check(new_match_list, target_dict, cred_dict)
+        match_kind, match = match.split(':', 2)
+        if hasattr(self, '_check_%s' % match_kind):
+          f = getattr(self, '_check_%s' % match_kind)
+          rv = f(match, target_dict, cred_dict)
           if not rv:
             matched = False
             break
@@ -61,7 +61,11 @@ class Brain(object):
     # no OR rules matched
     return False
 
-  def _check(self, match, target_dict, cred_dict):
+  def _check_rule(self, match, target_dict, cred_dict):
+    new_match_list = self.rules.get(match[5:])
+    return self.check(new_match_list, target_dict, cred_dict)
+
+  def _check_generic(self, match, target_dict, cred_dict):
     """Check an individual match.
 
     Matches look like:
