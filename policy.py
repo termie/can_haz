@@ -63,10 +63,20 @@ class Brain(object):
     return False
 
   def _check(self, match, target_dict, cred_dict):
+    """Check an individual match.
+
+    Matches look like:
+
+      tenant:%(tenant_id)s
+      role:compute:admin
+
+    """
+
     # TODO(termie): do dict inspection via dot syntax
     match = match % target_dict
-    if match not in cred_dict:
-      return False
-    return True
+    key, value = match.split(':', 2)
+    if key in cred_dict:
+      return value == cred_dict[key]
+    return False
 
 
