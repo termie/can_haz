@@ -25,7 +25,6 @@ def can_haz(match_list, target_dict, credentials_dict):
     raise Exception('Not Allowed')
 
 
-
 class Brain(object):
   # class level on purpose, the brain is global
   rules = {}
